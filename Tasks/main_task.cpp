@@ -103,10 +103,7 @@ void set_tor(float tor)
 }
 void MODE1(void)
 {
-
-  float a = 0.5f;
-  pid_sudu_pitch.set_error(a-motor.para.vel);
-  pid_sudu_pitch.calc();
+  float a = 2.5f;
   enable_motor_mode(&hcan2,1,MIT_MODE);
-  mit_ctrl(&hcan2,1,0,0,0,0,pid_sudu_pitch.get_output());
+  mit_ctrl(&hcan2,1,0,0,0,0,a);
 }
