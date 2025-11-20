@@ -16,7 +16,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main_task.hpp"
 #include "system_user.hpp"
-
+#include <math.h>
 #include "DT7.hpp"
 #include "HW_can.hpp"
 #include "dm4310_drv.hpp"
@@ -108,5 +108,5 @@ void MODE1(void)
   pid_sudu_pitch.set_error(a-motor.para.vel);
   pid_sudu_pitch.calc();
   enable_motor_mode(&hcan2,1,MIT_MODE);
-  mit_ctrl(&hcan2,1,0,0,0,0,pid_sudu_pitch.get_output());
+  mit_ctrl(&hcan2,1,0,0,0,0,pid_sudu_pitch.get_output()+0.9*cos(motor.para.pos));
 }
