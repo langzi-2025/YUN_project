@@ -26,7 +26,7 @@ static uint8_t can1_rx_data[8], can2_rx_data[8];
 uint32_t pTxMailbox;
 extern float rc_rv__;
 extern float rc_rh__;
-
+extern Joint_Motor_t motor;
 /* External variables --------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 
@@ -116,8 +116,8 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &rx_header2, can2_rx_data) ==
         HAL_OK) // 获得接收到的数据头和数据
     {
-      if (rx_header2.StdId == 0x200) { // 帧头校验
-        // 校验通过进行具体数据处理
+      if (rx_header2.StdId == 0x11) { // 帧头校验
+      dm4310_fbdata(&motor, can2_rx_data,8);// 校验通过进行具体数据处理
       }
     }
   }

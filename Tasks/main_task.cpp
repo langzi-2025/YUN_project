@@ -23,6 +23,7 @@
 #include "iwdg.h"
 #include "math.h"
 #include "imu_task.hpp"
+#include "pid.hpp"
 /* Private macro -------------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
 /* Private types -------------------------------------------------------------*/
@@ -34,6 +35,8 @@
 float rc_rv__= 0;
 float rc_rh__ = 0;
 uint32_t tick = 0;
+PID_ pid_sudu_pitch(3.0f,0.0f,0.01f,3.5f,-3.5f);
+Joint_Motor_t motor;
 //函数声明区
 void MODE1(void);
 void set_tor(float tor);
@@ -101,4 +104,9 @@ void set_tor(float tor)
 void MODE1(void)
 {
 
+  float a = 0.5f;
+  pid_sudu_pitch.set_error(a-motor.para.vel);
+  pid_sudu_pitch.calc();
+  enable_motor_mode(&hcan2,1,MIT_MODE);
+  mit_ctrl(&hcan2,1,0,0,0,0,pid_sudu_pitch.get_output());
 }

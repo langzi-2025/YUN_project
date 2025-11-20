@@ -26,6 +26,7 @@ hello_world::imu::BMI088 *bmi088_ptr = nullptr;
 hello_world::ahrs::Mahony *mahony_ptr = nullptr;
 float acc_data[3], gyro_data[3], temp;
 float quat[4];
+
 /* External variables --------------------------------------------------------*/
 
 float euler_angles[3];
